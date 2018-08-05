@@ -14,6 +14,33 @@
   <link rel="stylesheet" href="/src/css/feed.css">
   <!-- Link the manifest.json in every page that the user might visit -->
   <link rel="manifest"  href="/manifest.json">
+
+  <!-- This is used by all the browsers. Chrome read this info from manifest.json, but uses the
+  below info as a fallback -->
+  <meta name="theme-color" content="#3f51b5">
+
+  <!-- SAFARI properties start -->
+  <!-- Safari does not recognise the manifest.json file. The below tags are needed to a PWA to be
+  comparable to how it works on Chrome. Not all properties of manifest.json file are present here. -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <!-- If the below tag for title is not given, it used the title mentioned in the title tag -->
+  <meta name="apple-mobile-web-app-title" content="PWAGram">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-57x57.png" sizes="57x57">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-60x60.png" sizes="60x60">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-72x72.png" sizes="72x72">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-76x76.png" sizes="76x76">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-114x114.png" sizes="114x114">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-120x120.png" sizes="120x120">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-144x144.png" sizes="144x144">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-152x152.png" sizes="152x152">
+  <link rel="apple-touch-icon" href="/src/images/icons/apple-icon-180x180.png" sizes="180x180">
+  <!-- SAFARI properties end -->
+
+  <!-- INTERNET EXPLORER properties start -->
+  <meta name="msapplication-TileImage" content="/src/images/icons/app-icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#fff">
+  <!-- INTERNET EXPLORER properties end -->
 </head>
 <body>
 

@@ -41,7 +41,7 @@
     "start_url": "/index.html",
     "scope": ".",
     "display": "standalone", 
-    "orientation": "portrait-primary", 
+    "orientation": "any", 
     "background_color": "#fff",
     "theme_color": "#3f51b5",
     "description": "A simple Instagram clone, implementing a lot of PWA love.",
