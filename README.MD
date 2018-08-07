@@ -68,6 +68,8 @@ Before getting on to what service workers are, lets see the behaviour of normal 
 - After idling for some time, if there are no events to react to, it then goes to the **terminated** state.
 - In case of any events, the service worker is triggered to come back to the **idle** state for further actions.
 
+**Service workers only work on pages served via HTTPS.**
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 
