@@ -70,6 +70,21 @@ Before getting on to what service workers are, lets see the behaviour of normal 
 
 **Service workers only work on pages served via HTTPS.**
 
+### Understanding the lifecycle events
+
+1. The service worker registration happens in one of the JavaScript files (Running in a separate thread).
+2. The service worker installation and activation happens in the service worker JavaScript file (Running in a separate thread).
+3. For every reload of the page, service worker gets registered to the browser.
+4. If the service worker code is changed, the installation event gets triggered, but the activation does not happen until all the opened tabs of the app are closed and reopened.
+5. The activation of a service worker has such a condition because a service worker is a background process. If a tab with the app running is open, the service worker might be communicating with the app and hence the updated service worker changes might break the existing app.
+
+### Non-lifecycle event - FETCH
+
+The most important event which is not part of the service worker lifecycle is the **Fetch** event.
+Fetch event is trigged by the application while fetching CSS, JS, images or data. Every fetch request of the app goes through the service worker and so does every response. The service worker acts like a proxy.
+
+The power of this event passing through the service worker gets realized when the application needs to work offline and data needs to be served from cache.
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 
