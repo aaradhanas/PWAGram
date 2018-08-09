@@ -32,8 +32,6 @@ If you would like to know the browsers which support the web app manifest, pleas
 
 [MDN Article on the Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) and [Web App Manifest Explanation by Google](https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/) provide detailed information about the supported properties.
 
-For information about the criteria for a **Web App Install Banner** to be displayed in the browser, please visit [More about the Web App Install Banner](https://developers.google.com/web/fundamentals/engage-and-retain/app-install-banners/)
-
 # Service Workers
 
 Before getting on to what service workers are, lets see the behaviour of normal JavaScript files attached to HTML pages. The JS files run on a single thread attached to individual HTML pages. They have the capability to manipulate the DOM.
@@ -68,15 +66,16 @@ Before getting on to what service workers are, lets see the behaviour of normal 
 - After idling for some time, if there are no events to react to, it then goes to the **terminated** state.
 - In case of any events, the service worker is triggered to come back to the **idle** state for further actions.
 
-**Service workers only work on pages served via HTTPS.**
+**IMPORTANT** - Service workers only work on pages served via HTTPS.
 
 ### Understanding the lifecycle events
 
 1. The service worker registration happens in one of the JavaScript files (Running in a separate thread).
 2. The service worker installation and activation happens in the service worker JavaScript file (Running in a separate thread).
 3. For every reload of the page, service worker gets registered to the browser.
-4. If the service worker code is changed, the installation event gets triggered, but the activation does not happen until all the opened tabs of the app are closed and reopened.
+4. If the service worker code is changed, the installation event gets triggered, but the activation does not happen until all the opened tabs and windows of the app are closed and reopened.
 5. The activation of a service worker has such a condition because a service worker is a background process. If a tab with the app running is open, the service worker might be communicating with the app and hence the updated service worker changes might break the existing app.
+6. The service worker can be unregistered.
 
 ### Non-lifecycle event - FETCH
 
@@ -84,6 +83,39 @@ The most important event which is not part of the service worker lifecycle is th
 Fetch event is trigged by the application while fetching CSS, JS, images or data. Every fetch request of the app goes through the service worker and so does every response. The service worker acts like a proxy.
 
 The power of this event passing through the service worker gets realized when the application needs to work offline and data needs to be served from cache.
+
+### Multiple service workers
+
+A page could have multiple service workers, but only with different scopes. You can use a service worker for the /help "subdirectory" and one for the rest of your app. The more specific service worker (=> /help) overwrites the other one for its scope.
+
+# Development mode - How to connect Chrome Developer Tools to a Real/Emulated device
+
+It's easy to connect your Chrome Developer Tools with a Real or Emulated Android Device.
+
+The following article explains it step-by-step and by using helpful images: https://developers.google.com/web/tools/chrome-devtools/remote-debugging/
+
+Make sure you enabled "Developer Mode" on your device. You do that by tapping your Android Build Number (in the Settings) 7 times. Yes, this is no joke ;-)
+
+Once you have connected your real/emulated device to your dev tools, it is possible to inspect the actions happening on your device, view logs in the console and also open new tabs on your device.
+
+**IMPORTANT** - If you make any changes to the service worker, please be aware that you need to close all the opened tabs in your device for the new version of the service worker to get activated.
+
+
+### Web App Install Banner
+
+A web app install banner is a prompt that comes up when a user accesses the PWA via the browser. This enables the user to install the app to his home screen. The prompt contains the app icon, app name and a button which reads "Add to Home Screen". This banner is shown automatically by the browser if the app meets few important criteria.
+
+For information about the criteria for a Web App Install Banner to be displayed in the browser, please visit [More about the Web App Install Banner](https://developers.google.com/web/fundamentals/engage-and-retain/app-install-banners/)
+
+## How to add your app to home screen
+
+If your app satifies the above mentioned criteria, the browser fires an event which indicates that the install banner can be shown. In order to show the **Add to Home Screen** dialog, you need to:
+
+1. Listen for the **beforeinstallprompt** event fired by the browser.
+2. If you want to show the banner on a particular user action (click of a button, etc.), you have to save the beforeinstallprompt event, and then use it to show the banner on that action.
+3. The prompt can be displayed by calling **prompt()** on the saved beforeinstallprompt event.
+
+An **appinstalled** event is fired once the app gets succesfully installed/added to the home screen.
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.

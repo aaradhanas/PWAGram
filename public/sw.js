@@ -6,7 +6,7 @@ self.addEventListener('install', function(event) {
 });
 
 /*
-    Activation event is triggered by the browser. It does not happen until all the opened tabs 
+    Activation event is triggered by the browser. It does not happen until all the opened tabs and windows
     of the app are closed and reopened.
 */
 self.addEventListener('activate', function(event) {
@@ -20,6 +20,7 @@ self.addEventListener('activate', function(event) {
     Fetch event is trigged by the application while fetching CSS, JS, images or data.
     Every fetch request of the app goes through the service worker and so does every response.
     The service worker acts like a proxy.
+    There could be more than one fetch listeners (Part of course FAQ, not sure why)
 */
 self.addEventListener('fetch', function(event) {
     console.log('[Service Worker] Fetching something..', event);
