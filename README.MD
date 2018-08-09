@@ -101,7 +101,7 @@ Once you have connected your real/emulated device to your dev tools, it is possi
 **IMPORTANT** - If you make any changes to the service worker, please be aware that you need to close all the opened tabs in your device for the new version of the service worker to get activated.
 
 
-### Web App Install Banner
+# Web App Install Banner
 
 A web app install banner is a prompt that comes up when a user accesses the PWA via the browser. This enables the user to install the app to his home screen. The prompt contains the app icon, app name and a button which reads "Add to Home Screen". This banner is shown automatically by the browser if the app meets few important criteria.
 
