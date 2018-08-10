@@ -10,8 +10,15 @@ if ('serviceWorker' in navigator){
     navigator.serviceWorker
         .register('/sw.js', {scope: '/'})
         .then( function() {
-            console.log('Service worker registered !!');
+            console.log('Service worker for / registered !!');
         });
+
+    // How to register a service worker for a specific scope
+    /* navigator.serviceWorker
+    .register('/help/sw-help.js', {scope: '/help/'})
+    .then( function() {
+        console.log('Service worker for /help registered !!');
+    }); */
 }
 
 /*
@@ -34,6 +41,7 @@ window.addEventListener('appinstalled', function(event) {
 
 
 // Unregistration of a service worker is possible, not sure about when it would be used though.
+// Reference blog post - https://love2dev.com/blog/how-to-uninstall-a-service-worker/
 /*if('serviceWorker' in navigator){
     navigator.serviceWorker.getRegistrations()
         .then( function(serviceWorkers) {

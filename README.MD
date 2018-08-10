@@ -84,9 +84,25 @@ Fetch event is trigged by the application while fetching CSS, JS, images or data
 
 The power of this event passing through the service worker gets realized when the application needs to work offline and data needs to be served from cache.
 
+### Unregister a service worker
+
+If you find a bug in your service worker in development mode, there are multiple ways to reload/update it using dev tools. What if the same situation occurs while your app is in production? The blog post [here](https://love2dev.com/blog/how-to-uninstall-a-service-worker/) gives a good overview of the steps that can be taken.
+
 ### Multiple service workers
 
-A page could have multiple service workers, but only with different scopes. You can use a service worker for the /help "subdirectory" and one for the rest of your app. The more specific service worker (=> /help) overwrites the other one for its scope.
+A page could have multiple service workers, but only with **different scopes**. You can use a service worker for the /help "subdirectory" and one for the rest of your app. The more specific service worker (=> /help) overwrites the other one for its scope.
+
+### Difference between Web Workers and Service Workers
+
+Service Workers are a special type of Web Workers.
+
+Web Workers also run on a background thread, decoupled from the DOM. They don't keep on living after the page is closed though. Service Worker on the other hand, keeps on running (depending on the operating system) and also is decoupled from an individual page. 
+
+### Browser support and References
+
+Are Service Workers Ready? - Check [Browser Support](https://jakearchibald.github.io/isserviceworkerready/)
+
+For detailed information on service workers, please read [Getting Started with Service Workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers)
 
 # Development mode - How to connect Chrome Developer Tools to a Real/Emulated device
 
@@ -115,7 +131,7 @@ If your app satifies the above mentioned criteria, the browser fires an event wh
 2. If you want to show the banner on a particular user action (click of a button, etc.), you have to save the beforeinstallprompt event, and then use it to show the banner on that action.
 3. The prompt can be displayed by calling **prompt()** on the saved beforeinstallprompt event.
 
-An **appinstalled** event is fired once the app gets succesfully installed/added to the home screen.
+An **appinstalled** event is fired once the app gets succesfully installed/added to the home screen. You could listen to this event to get a heuristic of how many users actually added the app to their home screen after the app install banner was shown.
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
