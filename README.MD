@@ -133,6 +133,22 @@ If your app satifies the above mentioned criteria, the browser fires an event wh
 
 An **appinstalled** event is fired once the app gets succesfully installed/added to the home screen. You could listen to this event to get a heuristic of how many users actually added the app to their home screen after the app install banner was shown.
 
+# Promises and Fetch API
+
+### Asynchronous code in JavaScript
+
+Asynchronous operations are quite common in any application. If we know that an operation could take time (writing to a database, reading from a server, etc), it is not required for us to wait until the operation is complete and then proceed with the next action. Since JavaScript code runs in a single thread, this could potentiallly block the next operations.
+
+We could define a callback to which the control returns to once the required operation is completed. Hence, this is called a non-blocking operation. One such in-built JS function is **setTimeout**. The disadvantage of async code is that they could get into a callback hell when there are nested callbacks.
+
+### Promises
+
+Promises are also used to execute asynchronous operations. A promise is created by passing a function you want to execute and this function takes in two functions as arguments - **resolve** and **reject**. 
+
+We can use the **then** function to consume the data when a promise resolves (in success cases). We can use the **catch** function to handle errors when a promise gets rejected (in error cases).
+
+The main advantage of a promise is that it is easier to chain multiple async operations. In particular, we could chain mutiple calls to **then** function. We could have a **catch** function at the end of the chain to catch errors occurring in any of the then blocks.
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 

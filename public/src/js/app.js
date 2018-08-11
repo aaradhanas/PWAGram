@@ -13,12 +13,14 @@ if ('serviceWorker' in navigator){
             console.log('Service worker for / registered !!');
         });
 
-    // How to register a service worker for a specific scope
+    /* How to register a service worker for a specific scope. Need not mention the scope if the
+    service worker resides in the same folder of your scope.
+    */
     /* navigator.serviceWorker
     .register('/help/sw-help.js', {scope: '/help/'})
     .then( function() {
         console.log('Service worker for /help registered !!');
-    }); */
+    });*/
 }
 
 /*
@@ -34,10 +36,32 @@ window.addEventListener('beforeinstallprompt', function(event){
 });
 
 
-// TO VALIDATE - This listender is added to get notified once the app is successfully installed to home screen.
+// TO VALIDATE - This listener is added to get notified once the app is successfully installed to home screen.
 window.addEventListener('appinstalled', function(event) {
     console.log('App successfully installed to home screen');
 });
+
+var promise = new Promise(function(resolve, reject){
+    setTimeout( function() {
+        resolve('Hello World');
+        //reject({code: 500, message: 'An error occurred!'});
+    }, 3000);
+});
+
+promise.then(function(text){
+    console.log('Chain 1 text = ', text);
+    return new Promise(function(resolve, reject){
+        resolve(text.toUpperCase());
+    });
+}).then(function(text){
+    console.log('Chain 2 text = ', text);
+})
+// Catch blocks catch any errors occurring in the then blocks that come before it.
+.catch(function(err){
+    console.log(err.code, err.message);
+});
+
+console.log('Executed right after setTimeout');
 
 
 // Unregistration of a service worker is possible, not sure about when it would be used though.
