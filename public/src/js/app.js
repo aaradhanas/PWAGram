@@ -11,6 +11,9 @@ if ('serviceWorker' in navigator){
         .register('/sw.js', {scope: '/'})
         .then( function() {
             console.log('Service worker for / registered !!');
+        })
+        .catch( function(){
+            console.log(err);
         });
 
     /* How to register a service worker for a specific scope. Need not mention the scope if the
@@ -60,9 +63,23 @@ promise.then(function(text){
 .catch(function(err){
     console.log(err.code, err.message);
 });
-
 console.log('Executed right after setTimeout');
 
+
+// Fetch API
+fetch('https://httpbin.org/ip')
+ .then(function(response){
+     console.log(response);
+    // json is a utility method provided by the fetch API on the body of response object.
+    // This is an asynchronous operation since the response body is a readable stream.
+    return response.json();
+ })
+ .then(function(data){
+    console.log(data);
+ })
+ .catch(function(err){
+     console.log(err);
+ });
 
 // Unregistration of a service worker is possible, not sure about when it would be used though.
 // Reference blog post - https://love2dev.com/blog/how-to-uninstall-a-service-worker/

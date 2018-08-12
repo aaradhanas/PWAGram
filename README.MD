@@ -149,6 +149,10 @@ We can use the **then** function to consume the data when a promise resolves (in
 
 The main advantage of a promise is that it is easier to chain multiple async operations. In particular, we could chain mutiple calls to **then** function. We could have a **catch** function at the end of the chain to catch errors occurring in any of the then blocks.
 
+### Fetch API
+
+**fetch** is a method provided by JavaScript. It allows us to send HTTP requests. This method returns a promise which can be handled using 'then' function in which the response can be read. Any error thrown by the fetch method can be handled using the 'catch' function.
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 
@@ -158,3 +162,7 @@ Finally, run `npm start` to start the development server and visit [localhost:80
 
 # Courtesy
 This application is a part of Maximilian Schwarzmüller's "Progressive Web Apps - Complete Guide" course on [Udemy](https://www.udemy.com/).
+
+# References
+
+[HTTP Bin](https://httpbin.org) - Contains REST endpoints which can be used for testing any UI with sample data.
