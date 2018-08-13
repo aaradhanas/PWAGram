@@ -153,6 +153,10 @@ The main advantage of a promise is that it is easier to chain multiple async ope
 
 **fetch** is a method provided by JavaScript. It allows us to send HTTP requests. This method returns a promise which can be handled using 'then' function in which the response can be read. Any error thrown by the fetch method can be handled using the 'catch' function.
 
+We can specify the mode in which our fetch API needs to operate with respect to CORS. The mode can be set to **cors** (this is the default value) or **no-cors**. Setting the mode to 'cors' expects the CORS headers (Access-Control-Allow-Credentials and Access-Control-Allow-Origin) from the server, which indicates that the server allows requests from origins different from its own. If these headers are not set, the response body is hidden and cannot be accessed by the client.
+
+How does the Fetch API differ from traditional AJAX requests. Fetch API requires a lot lesser code to send an HTTP request, parse the response and handle errors. They are very well suited for service workers which require asynchronous ready operations. AJAX requests cannot be used in service workers because they do have some synchronous behaviour behind the scenes.
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 
