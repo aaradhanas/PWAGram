@@ -38,83 +38,10 @@ window.addEventListener('beforeinstallprompt', function(event){
     return false;
 });
 
-
-// TO VALIDATE - This listener is added to get notified once the app is successfully installed to home screen.
+// This listener is added to get notified once the app is successfully installed to home screen.
 window.addEventListener('appinstalled', function(event) {
     console.log('App successfully installed to home screen');
 });
-
-var promise = new Promise(function(resolve, reject){
-    setTimeout( function() {
-        resolve('Hello World');
-        //reject({code: 500, message: 'An error occurred!'});
-    }, 3000);
-});
-
-promise.then(function(text){
-    console.log('Chain 1 text = ', text);
-    return new Promise(function(resolve, reject){
-        resolve(text.toUpperCase());
-    });
-}).then(function(text){
-    console.log('Chain 2 text = ', text);
-})
-// Catch blocks catch any errors occurring in the then blocks that come before it.
-.catch(function(err){
-    console.log(err.code, err.message);
-});
-console.log('Executed right after setTimeout');
-
-var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://httpbin.org/ip');
-xhr.responseType = 'json';
-
-xhr.onload = function(){
-    console.log(xhr.response);
-}
-
-xhr.onerror = function(){
-    console.log('Error');
-}
-
-xhr.send();
-// Fetch API
-fetch('https://httpbin.org/ip')
- .then(function(response){
-     console.log(response);
-    // json is a utility method provided by the fetch API on the body of response object.
-    // This is an asynchronous operation since the response body is a readable stream.
-    return response.json();
- })
- .then(function(data){
-    console.log(data);
- })
- .catch(function(err){
-     console.log(err);
- });
-
- fetch('https://httpbin.org/post', {
-     method: 'POST',
-     headers: {
-         'Content-Type': 'application/json',
-         'Accept': 'application/json'
-     },
-     // Another mode is 'no-cors'
-     mode: 'cors',
-     body: JSON.stringify({
-         message: 'Does this work?'
-     })
- })
- .then(function(response){
-    console.log(response);
-    return response.json();
- })
- .then(function(data){
-    console.log(data);
- })
- .catch(function(err){
-     console.log('Error occurred:',err);
- });
 
 // Unregistration of a service worker is possible, not sure about when it would be used though.
 // Reference blog post - https://love2dev.com/blog/how-to-uninstall-a-service-worker/

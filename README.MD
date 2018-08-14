@@ -143,7 +143,7 @@ We could define a callback to which the control returns to once the required ope
 
 ### Promises
 
-Promises are also used to execute asynchronous operations. A promise is created by passing a function you want to execute and this function takes in two functions as arguments - **resolve** and **reject**. 
+A Promise is an object representing the eventual completion or failure of an asynchronous operation. A promise is created by passing a function you want to execute and this function takes in two functions as arguments - **resolve** and **reject**. 
 
 We can use the **then** function to consume the data when a promise resolves (in success cases). We can use the **catch** function to handle errors when a promise gets rejected (in error cases).
 
