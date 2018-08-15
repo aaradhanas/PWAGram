@@ -8,8 +8,8 @@ var promise = new Promise(function(resolve, reject){
 promise.then(function(text){
     console.log('Chain 1 text = ', text);
     return new Promise(function(resolve, reject){
-        //resolve(text.toUpperCase());
-        reject({code: 500, message: 'An error occurred!'});
+        resolve(text.toUpperCase());
+        //reject({code: 500, message: 'An error occurred!'});
     });
 }).then(function(text){
     console.log('Chain 2 text = ', text);

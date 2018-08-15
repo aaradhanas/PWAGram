@@ -139,7 +139,7 @@ An **appinstalled** event is fired once the app gets succesfully installed/added
 
 Asynchronous operations are quite common in any application. If we know that an operation could take time (writing to a database, reading from a server, etc), it is not required for us to wait until the operation is complete and then proceed with the next action. Since JavaScript code runs in a single thread, this could potentiallly block the next operations.
 
-We could define a callback to which the control returns to once the required operation is completed. Hence, this is called a non-blocking operation. One such in-built JS function is **setTimeout**. The disadvantage of async code is that they could get into a callback hell when there are nested callbacks.
+We could define a callback to which the control returns to once the required operation is completed. Hence, this is called a non-blocking operation. One such in-built JS function is **setTimeout**. The disadvantage of async code is that they would lead to the classic callback pyramid of doom when there are nested callbacks.
 
 ### Promises
 
@@ -156,6 +156,12 @@ The main advantage of a promise is that it is easier to chain multiple async ope
 We can specify the mode in which our fetch API needs to operate with respect to CORS. The mode can be set to **cors** (this is the default value) or **no-cors**. Setting the mode to 'cors' expects the CORS headers (Access-Control-Allow-Credentials and Access-Control-Allow-Origin) from the server, which indicates that the server allows requests from origins different from its own. If these headers are not set, the response body is hidden and cannot be accessed by the client.
 
 How does the Fetch API differ from traditional AJAX requests. Fetch API requires a lot lesser code to send an HTTP request, parse the response and handle errors. They are very well suited for service workers which require asynchronous ready operations. AJAX requests cannot be used in service workers because they do have some synchronous behaviour behind the scenes.
+
+### Browser support
+
+Fetch and Promises have good browser support, but are not supported by all browsers (especially older ones). In such cases, we need to use polyfills.
+
+**Polyfill** is a piece of code (usually JavaScript on the Web) used to provide modern functionality on older browsers that do not natively support it.
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
