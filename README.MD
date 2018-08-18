@@ -163,6 +163,20 @@ Fetch and Promises have good browser support, but are not supported by all brows
 
 **Polyfill** is a piece of code (usually JavaScript on the Web) used to provide modern functionality on older browsers that do not natively support it.
 
+# Service Workers - Caching
+
+Caching is important to provide offline access of your web application. Why should we support offline access?
+
+- Poor connection (When lot of people are accessing the application)
+- No connection (For example, in elevators)
+- Lie-Fie (When your phone shows that it is connected to the WiFi, but the connection doesn't work. Especially in hotspots, hotels, etc.)
+
+### The Cache API
+
+It is a separate cache storage living in the browser and managed by the developer. The cache consists of simple **key/value pairs** where the key is the request you want to send and the value is the response you got back. The cache API can be accessed from both the service worker and normal JavaScript (on pages). Cache data can be retrieved instead of sending network request.
+
+With the fetch event listener and the cache API, we have a complete network proxy living in the service worker, which decides whether the request needs to be sent to the network or the response should be returned from the cache.
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 
