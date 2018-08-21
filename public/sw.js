@@ -23,7 +23,6 @@ self.addEventListener('activate', function(event) {
     There could be more than one fetch listeners (Part of course FAQ, not sure why)
 */
 self.addEventListener('fetch', function(event) {
-    console.log('[Service Worker] Fetching something..', event);
     // We can override the response using the below method
     event.respondWith( fetch(event.request) );
 });

@@ -5,6 +5,8 @@ A simple Instagram clone, implementing a lot of PWA features.
 
 PWA is the abbreviation for **Progressive Web Application**. It is a term referrring to a couple of features you can add to any web application to enhance it. You can progressively enhance your web apps to look and feel like native apps.
 
+**Progressive enhancement** is a design philosophy that centers around providing a baseline of essential content and functionality to as many users as possible, while at the same time going further and delivering the best possible experience only to users of the most modern browsers that can run all the required code.
+
 A PWA basically incorporates the pros of a native mobile application and a web application. It can have the reach of a web app and also use device features (like camera) of a mobile.
 
 - **Reliable**: Load fast and provide offline functionality
@@ -173,9 +175,15 @@ Caching is important to provide offline access of your web application. Why shou
 
 ### The Cache API
 
-It is a separate cache storage living in the browser and managed by the developer. The cache consists of simple **key/value pairs** where the key is the request you want to send and the value is the response you got back. The cache API can be accessed from both the service worker and normal JavaScript (on pages). Cache data can be retrieved instead of sending network request.
+It is a separate cache storage living in the browser and managed by the developer. The cache consists of simple **key/value pairs** where key is the request you want to send and value is the response you got back. The cache API can be accessed from both service workers and normal JavaScript (on pages). Cache data can be retrieved instead of sending network request.
 
-With the fetch event listener and the cache API, we have a complete network proxy living in the service worker, which decides whether the request needs to be sent to the network or the response should be returned from the cache.
+With the fetch event listener and the cache API, we have a complete network proxy living in the service worker, which decides whether the request needs to be sent to the network or the response should be returned from the cache, if available.
+
+Refer [Cache API Browser Support](https://developer.mozilla.org/en-US/docs/Web/API/Cache#Browser_compatibility) to know about the browsers which support Cache API.
+
+### Identify Cachable Items
+
+An **application shell** (app shell) is the mininal HTML, CSS and JavaScript required to power the user interface and when cached offline can ensure instant, reliably good performance to users on repeated visits. This is the core part of your application and the first thing to be cached in order to deliver good user experience when your app is offline.
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
