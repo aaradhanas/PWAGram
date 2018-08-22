@@ -181,9 +181,15 @@ With the fetch event listener and the cache API, we have a complete network prox
 
 Refer [Cache API Browser Support](https://developer.mozilla.org/en-US/docs/Web/API/Cache#Browser_compatibility) to know about the browsers which support Cache API.
 
-### Identify Cachable Items
+Refer [Cache API Methods](https://developer.mozilla.org/en-US/docs/Web/API/Cache#Methods) to know about the methods available in the Cache API.
+
+### Identify Cacheable Items
 
 An **application shell** (app shell) is the mininal HTML, CSS and JavaScript required to power the user interface and when cached offline can ensure instant, reliably good performance to users on repeated visits. This is the core part of your application and the first thing to be cached in order to deliver good user experience when your app is offline.
+
+### Static caching at Service Worker Installation
+
+Since the service worker get installed only when there is a new version of it available, this is the best phase to cache any items which do not change that often (our app shell). We do the caching during service worker installation where we get access to the cache API. These assets will become available for fetching from cache right from the next page visit. This is the earliest point of time when we can store our assets in the cache.
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.

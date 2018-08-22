@@ -3,6 +3,15 @@
 */
 self.addEventListener('install', function(event) {
     console.log('[Service Worker] Installing Service Worker..', event);
+    // This ensures that the installation event does not finish until the cache is ready.
+    event.waitUntil(
+        // Opens a sub cache from the Cache Storage if it already exists or creates a new one, otherwise.
+        caches.open('static')
+            .then(function(cache){
+                console.log('[Service Worker] Precaching App Shell..');
+                cache.add('/src/js/app.js');
+            })
+    );
 });
 
 /*
