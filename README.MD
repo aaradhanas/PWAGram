@@ -191,6 +191,10 @@ An **application shell** (app shell) is the mininal HTML, CSS and JavaScript req
 
 Since the service worker get installed only when there is a new version of it available, this is the best phase to cache any items which do not change that often (our app shell). We do the caching during service worker installation where we get access to the cache API. These assets will become available for fetching from cache right from the next page visit. This is the earliest point of time when we can store our assets in the cache.
 
+### Dynamic caching upon fetch
+
+There could be few assets which do not require pre caching but need to fetched on demand. In this case, it is possible to add them to the cache after they are first fetched so that they become available for future visits. This is important because we cannot bloat the cache with too many entries during pre caching.
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 
