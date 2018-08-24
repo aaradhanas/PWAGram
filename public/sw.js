@@ -1,3 +1,6 @@
+var STATIC_CACHE_NAME = 'static-v1';
+var DYNAMIC_CACHE_NAME = 'dynamic-v1';
+
 /*
     Installation event is triggered by the browser if the service worker code is changed.
 */
@@ -6,7 +9,7 @@ self.addEventListener('install', function(event) {
     // This ensures that the installation event does not finish until the cache is ready.
     event.waitUntil(
         // Opens a sub cache from the Cache Storage if it already exists or creates a new one, otherwise.
-        caches.open('static-v1')
+        caches.open(STATIC_CACHE_NAME)
             .then(function(cache){
                 console.log('[Service Worker] Precaching App Shell..');
                 cache.addAll([
@@ -40,7 +43,7 @@ self.addEventListener('activate', function(event) {
             .then(function(keyList){
                 // Promise.all() takes an array of promises as an argument and waits for all of them to finish.
                 Promise.all(keyList.map(function(key){
-                    if(key !== 'static-v1' && key !== 'dynamic'){
+                    if(key !== STATIC_CACHE_NAME && key !== DYNAMIC_CACHE_NAME){
                         console.log('[Service Worker] Removing old cache - ', key);
                         return caches.delete(key);
                     }
@@ -70,7 +73,7 @@ self.addEventListener('fetch', function(event) {
                 } else{
                     return fetch(event.request)
                             .then(function(res){
-                                return caches.open('dynamic')
+                                return caches.open(DYNAMIC_CACHE_NAME)
                                     .then(function(cache){
                                         // Response gets consumed while getting stored in the cache
                                         // It can be consumed only once. Hence, we store the clone.
