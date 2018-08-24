@@ -195,6 +195,12 @@ Since the service worker get installed only when there is a new version of it av
 
 There could be few assets which do not require pre caching but need to fetched on demand. In this case, it is possible to add them to the cache after they are first fetched so that they become available for future visits. This is important because we cannot bloat the cache with too many entries during pre caching.
 
+### Adding cache versioning
+
+Suppose you make some changes in a JavaScript file which has been pre-cached statically. The cache entry cannot be updated until the installation of service worker happens (Remember, this happens only if the service worker code atleast changes by one byte).
+
+We can handle this situation by creating a new version of the cache (This changes the service worker code too). New version here actually means a new sub cache. But for the application to access the new cache correctly, we need to remove the older versions during service worker activation.
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 

@@ -6,7 +6,7 @@ self.addEventListener('install', function(event) {
     // This ensures that the installation event does not finish until the cache is ready.
     event.waitUntil(
         // Opens a sub cache from the Cache Storage if it already exists or creates a new one, otherwise.
-        caches.open('static')
+        caches.open('static-v1')
             .then(function(cache){
                 console.log('[Service Worker] Precaching App Shell..');
                 cache.addAll([
@@ -34,6 +34,19 @@ self.addEventListener('install', function(event) {
 */
 self.addEventListener('activate', function(event) {
     console.log('[Service Worker] Activating Service Worker..', event);
+
+    event.waitUntil(
+        caches.keys()
+            .then(function(keyList){
+                // Promise.all() takes an array of promises as an argument and waits for all of them to finish.
+                Promise.all(keyList.map(function(key){
+                    if(key !== 'static-v1' && key !== 'dynamic'){
+                        console.log('[Service Worker] Removing old cache - ', key);
+                        return caches.delete(key);
+                    }
+                }));
+            })
+    )
     // This ensures the SW is activated correctly. Not really needed, but it might fail if not present.
     // Adding this makes the activation more robust..Might not be required in the future.
     return self.clients.claim();
@@ -55,7 +68,19 @@ self.addEventListener('fetch', function(event) {
                 if(response){
                     return response;
                 } else{
-                    return fetch(event.request);
+                    return fetch(event.request)
+                            .then(function(res){
+                                return caches.open('dynamic')
+                                    .then(function(cache){
+                                        // Response gets consumed while getting stored in the cache
+                                        // It can be consumed only once. Hence, we store the clone.
+                                        cache.put(event.request, res.clone());
+                                        return res;
+                                    })
+                            })
+                            .catch(function(err){
+                                console.log('Error ocurred while fetching');
+                            })
                 }
             })
     );
