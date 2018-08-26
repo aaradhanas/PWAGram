@@ -1,4 +1,5 @@
 var CACHE_APP_SHELL = 'app-shell-static-v1';
+var CACHE_DYNAMIC = 'dynamic-v1';
 
 // Service Worker Installation Listener
 self.addEventListener('install', function(event){
@@ -30,7 +31,7 @@ self.addEventListener('activate', function(event){
         caches.keys()
             .then(function(keyList){
                 Promise.all(keyList.map(function(key){
-                    if(key !== CACHE_APP_SHELL){
+                    if(key !== CACHE_APP_SHELL && key !== CACHE_DYNAMIC){
                         console.log('[Service Worker] Removing old cache:', key);
                         return caches.delete(key);
                     }
@@ -47,7 +48,17 @@ self.addEventListener('fetch', function(event){
                 if(response){
                     return response;
                 } else{
-                    return fetch(event.request);
+                    return fetch(event.request)
+                            .then(function(res){
+                                return caches.open(CACHE_DYNAMIC)
+                                    .then(function(cache){
+                                        cache.put(event.request, res.clone());
+                                        return res;
+                                    })
+                            })
+                            .catch(function(err){
+
+                            });
                 }
             })
     )
