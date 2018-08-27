@@ -1,4 +1,4 @@
-var STATIC_CACHE_NAME = 'static-v1';
+var STATIC_CACHE_NAME = 'static-v3';
 var DYNAMIC_CACHE_NAME = 'dynamic-v1';
 
 /*
@@ -6,6 +6,7 @@ var DYNAMIC_CACHE_NAME = 'dynamic-v1';
 */
 self.addEventListener('install', function(event) {
     console.log('[Service Worker] Installing Service Worker..', event);
+    // waitUntil event waits until the promise returned by the function passed to it either rejects or resolves.
     // This ensures that the installation event does not finish until the cache is ready.
     event.waitUntil(
         // Opens a sub cache from the Cache Storage if it already exists or creates a new one, otherwise.
@@ -15,6 +16,7 @@ self.addEventListener('install', function(event) {
                 cache.addAll([
                     '/',
                     '/index.html',
+                    '/offline.html',
                     '/src/js/app.js',
                     '/src/js/feed.js',
                     '/src/js/material.min.js',
@@ -82,7 +84,10 @@ self.addEventListener('fetch', function(event) {
                                     })
                             })
                             .catch(function(err){
-                                console.log('Error ocurred while fetching');
+                                return caches.open(STATIC_CACHE_NAME)
+                                        .then(function(cache){
+                                            return cache.match('/offline.html');
+                                        });
                             })
                 }
             })
