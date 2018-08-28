@@ -201,6 +201,24 @@ Suppose you make some changes in a JavaScript file which has been pre-cached sta
 
 We can handle this situation by creating a new version of the cache (This changes the service worker code too). New version here actually means a new sub cache. But for the application to access the new cache correctly, we need to remove the older versions during service worker activation.
 
+# Service Workers - Advanced Caching
+
+### Caching strategies
+
+1. **Cache with Network Fallback**  
+    Check if the resource is present in cache. If yes, return it. Else, fetch from network.  
+    Advantage - Cache access is the default and hence fast.  
+    Disadvantage - We tend to return response from cache even when the resource gets updated.
+2. **Cache Only**  
+    Return the response only from cache. Having network or not doesn't matter.
+3. **Network Only**  
+    Return the response only from network. The request need not pass through service worker.
+4. **Network with Cache Fallback**  
+    Fetch the resource from network. If the fetch fails, reach out to the cache. If the fetch succeeds, add the response to the cache (dynamic caching).  
+    Disadvantages:
+    1. We do no initially fetch from cache which has faster response.
+    2. We need to wait for the network request to fail/timeout and then fetch from cache, which leads to bad user experience.
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 

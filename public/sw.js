@@ -63,6 +63,8 @@ self.addEventListener('activate', function(event) {
     The service worker acts like a proxy.
     There could be more than one fetch listeners (Part of course FAQ, not sure why)
 */
+
+// Strategy - Cache with Network Fallback
 self.addEventListener('fetch', function(event) {
     // We can override the response using the below method
     event.respondWith(
@@ -93,3 +95,36 @@ self.addEventListener('fetch', function(event) {
             })
     );
 });
+
+/* // Strategy - Cache Only 
+self.addEventListener('fetch', function(event){
+    event.respondWith( caches.match(event.request) );
+}); */
+
+/* // Strategy - Network Only
+self.addEventListener('fetch', function(event){
+    event.respondWith( fetch(event.request) );
+}); */
+
+// Strategy - Network with Cache Fallback - Not used much because we need to wait for the network request to timeout and then fetch from cache.
+/* self.addEventListener('fetch', function(event) {
+    // We can override the response using the below method
+    event.respondWith(
+        // Do the fetch first
+        fetch(event.request)
+            // If fetch succeeds, then add to cache (dynamic caching)
+            .then(function(res){
+                return caches.open(DYNAMIC_CACHE_NAME)
+                    .then(function(cache){
+                        // Response gets consumed while getting stored in the cache
+                        // It can be consumed only once. Hence, we store the clone.
+                        cache.put(event.request, res.clone());
+                        return res;
+                    })
+            })
+            // If fetch fails, return response from cache.
+            .catch(function(err){
+                return caches.match(event.request)
+            })
+    );
+}); */
