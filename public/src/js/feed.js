@@ -46,6 +46,12 @@ function onSaveButtonClicked(event){
   }
 }
 
+function clearCards(){
+  while(sharedMomentsArea.hasChildNodes()){
+    sharedMomentsArea.removeChild(sharedMomentsArea.lastChild);
+  }
+}
+
 function createCard(){
   var cardWrapper = document.createElement('div');
   cardWrapper.className = 'shared-moment-card mdl-card mdl-shadow--2dp';
@@ -78,10 +84,35 @@ function createCard(){
   sharedMomentsArea.appendChild(cardWrapper);
 }
 
-fetch('https://httpbin.org/get')
-.then(function(response){
-  return response.json();
-})
-.then(function(data){
-  createCard();
-});
+
+// Strategy - Cache, then network
+var url = 'https://httpbin.org/get';
+var networkDataRecieved = false;
+
+fetch(url)
+  .then(function(response){
+    console.log('[Feed js] fetch then');
+    return response.json();
+  })
+  .then(function(data){
+    networkDataRecieved = true;
+    console.log('From web : ', data);
+    clearCards();
+    createCard();
+  });
+
+if('caches' in window){
+  caches.match(url)
+    .then(function(response){
+      if(response){
+        return response.json();
+      }
+    })
+    .then(function(data){
+      console.log('From cache : ', data);
+      if(!networkDataRecieved){
+        clearCards();
+        createCard();
+      }
+    })
+}

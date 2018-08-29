@@ -1,4 +1,4 @@
-var STATIC_CACHE_NAME = 'static-v3';
+var STATIC_CACHE_NAME = 'static-v6';
 var DYNAMIC_CACHE_NAME = 'dynamic-v1';
 
 /*
@@ -65,7 +65,7 @@ self.addEventListener('activate', function(event) {
 */
 
 // Strategy - Cache with Network Fallback
-self.addEventListener('fetch', function(event) {
+/* self.addEventListener('fetch', function(event) {
     // We can override the response using the below method
     event.respondWith(
         // Looks at all the available sub caches and check if a given request is present   
@@ -93,6 +93,32 @@ self.addEventListener('fetch', function(event) {
                             })
                 }
             })
+    );
+}); */
+
+// Strategy - Cache, then network with dynamic caching
+self.addEventListener('fetch', function(event){
+    event.respondWith(
+        /* caches.open(DYNAMIC_CACHE_NAME)
+            .then(function(cache){
+                return fetch(event.request)
+                        .then(function(res){
+                            //console.log('[Service Worker] fetch listener = ', event.request.url);
+                            cache.put(event.request, res.clone());
+                            return res;
+                        });
+            }) */
+            // Either the above or below approach works
+            fetch(event.request)
+                .then(function(res){
+                    return caches.open(DYNAMIC_CACHE_NAME)
+                        .then(function(cache){
+                            // Response gets consumed while getting stored in the cache
+                            // It can be consumed only once. Hence, we store the clone.
+                            cache.put(event.request, res.clone());
+                            return res;
+                        })
+                })
     );
 });
 

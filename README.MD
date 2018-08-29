@@ -218,6 +218,8 @@ We can handle this situation by creating a new version of the cache (This change
     Disadvantages:
     1. We do no initially fetch from cache which has faster response.
     2. We need to wait for the network request to fail/timeout and then fetch from cache, which leads to bad user experience.
+5. **Cache, then network**  
+    Fetch the resource from cache and simultaneously send request to the network. If we get response from the network, the data from cache is overridden by the network response since this is the most updated version. We could also dynamically cache the network response. If there is no response from network, the cache data is still available to be presented to the user.
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
