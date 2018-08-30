@@ -96,19 +96,12 @@ self.addEventListener('activate', function(event) {
     );
 }); */
 
-// Strategy - Cache, then network with dynamic caching
+// Strategy - Cache, then network with dynamic caching and offline support
 self.addEventListener('fetch', function(event){
-    event.respondWith(
-        /* caches.open(DYNAMIC_CACHE_NAME)
-            .then(function(cache){
-                return fetch(event.request)
-                        .then(function(res){
-                            //console.log('[Service Worker] fetch listener = ', event.request.url);
-                            cache.put(event.request, res.clone());
-                            return res;
-                        });
-            }) */
-            // Either the above or below approach works
+    var url = 'https://httpbin.org/get';
+    if(event.request.url.indexOf(url) != -1){
+        event.respondWith(
+            // Approach 1
             fetch(event.request)
                 .then(function(res){
                     return caches.open(DYNAMIC_CACHE_NAME)
@@ -119,7 +112,49 @@ self.addEventListener('fetch', function(event){
                             return res;
                         })
                 })
-    );
+        );
+    } else{
+        event.respondWith(
+            caches.match(event.request)
+            .then(function(response){
+                // Response is null if the request is not present in the cache
+                if(response){
+                    return response;
+                } else{
+                    return fetch(event.request)
+                            .then(function(res){
+                                return caches.open(DYNAMIC_CACHE_NAME)
+                                    .then(function(cache){
+                                        // Response gets consumed while getting stored in the cache
+                                        // It can be consumed only once. Hence, we store the clone.
+                                        cache.put(event.request, res.clone());
+                                        return res;
+                                    })
+                            })
+                            .catch(function(err){
+                                return caches.open(STATIC_CACHE_NAME)
+                                        .then(function(cache){
+                                            if(event.request.url.indexOf('/help') != -1){
+                                                return cache.match('/offline.html');
+                                            }
+                                        });
+                            })
+                }
+            })
+        )
+    }
+    
+    
+    // Either Approach 1 or below approach works
+    /* caches.open(DYNAMIC_CACHE_NAME)
+    .then(function(cache){
+        return fetch(event.request)
+                .then(function(res){
+                    //console.log('[Service Worker] fetch listener = ', event.request.url);
+                    cache.put(event.request, res.clone());
+                    return res;
+                });
+    }) */
 });
 
 /* // Strategy - Cache Only 
