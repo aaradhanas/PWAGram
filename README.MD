@@ -210,7 +210,7 @@ We can handle this situation by creating a new version of the cache (This change
     Advantage - Cache access is the default and hence fast.  
     Disadvantage - We tend to return response from cache even when the resource gets updated.
 2. **Cache Only**  
-    Return the response only from cache. Having network or not doesn't matter.
+    Return the response only from cache. Having network or not doesn't matter. Most suited for assets of the app shell which are pre-cached.
 3. **Network Only**  
     Return the response only from network. The request need not pass through service worker.
 4. **Network with Cache Fallback**  
