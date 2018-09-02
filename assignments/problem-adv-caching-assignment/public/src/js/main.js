@@ -39,14 +39,17 @@ if('caches' in window){
       }
     })
     .then(function(data){
-      console.log('From cache:', data.origin);
+      if(data){
+        console.log('From cache:', data.origin);
+      }
       if(!networkDataReceived){
-        box.style.height = (data.origin.substr(0, 2) * 5) + 'px';
+        box.style.height = (data.origin.substr(0, 2) * 10) + 'px';
       }
     })
 }
 
 // 1) Identify the strategy we currently use in the Service Worker (for caching)
+// Cache, with network fallback (dynamic caching)
 // 2) Replace it with a "Network only" strategy => Clear Storage (in Dev Tools), reload & try using your app offline
 // 3) Replace it with a "Cache only" strategy => Clear Storage (in Dev Tools), reload & try using your app offline
 // 4) Replace it with "Network, cache fallback" strategy =>  => Clear Storage (in Dev Tools), reload & try using your app offline
