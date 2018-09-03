@@ -45,12 +45,14 @@ window.addEventListener('appinstalled', function(event) {
 
 // Unregistration of a service worker is possible, not sure about when it would be used though.
 // Reference blog post - https://love2dev.com/blog/how-to-uninstall-a-service-worker/
-/*if('serviceWorker' in navigator){
-    navigator.serviceWorker.getRegistrations()
-        .then( function(serviceWorkers) {
-            for( let serviceWorker of serviceWorkers){
-                serviceWorker.unregister();
-                console.log('Service worker unregistered !!');
-            }
-        });
-}*/
+function unregisterServiceWorkers() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations()
+            .then(function (serviceWorkers) {
+                for (let serviceWorker of serviceWorkers) {
+                    serviceWorker.unregister();
+                    console.log('Service worker unregistered !!');
+                }
+            });
+    }
+}

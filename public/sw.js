@@ -1,4 +1,4 @@
-var STATIC_CACHE_NAME = 'static-v6';
+var STATIC_CACHE_NAME = 'static-v8';
 var DYNAMIC_CACHE_NAME = 'dynamic-v1';
 var STATIC_FILES = [
     '/',
@@ -16,6 +16,19 @@ var STATIC_FILES = [
     'https://fonts.googleapis.com/icon?family=Material+Icons',
     'https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css'
 ];
+
+function trimCache(cacheName, maxItems){
+    caches.open(cacheName)
+        .then(function(cache){
+            cache.keys()
+                .then(function(keys){
+                    if( keys.length > maxItems){
+                        cache.delete(keys[0])
+                            .then(trimCache(cacheName, maxItems));
+                    }
+                })
+        })
+}
 
 /*
     Installation event is triggered by the browser if the service worker code is changed.
@@ -114,6 +127,7 @@ self.addEventListener('fetch', function(event){
                 .then(function(res){
                     return caches.open(DYNAMIC_CACHE_NAME)
                         .then(function(cache){
+                            trimCache(DYNAMIC_CACHE_NAME, 3);
                             // Response gets consumed while getting stored in the cache
                             // It can be consumed only once. Hence, we store the clone.
                             cache.put(event.request, res.clone());
@@ -138,6 +152,7 @@ self.addEventListener('fetch', function(event){
                             .then(function(res){
                                 return caches.open(DYNAMIC_CACHE_NAME)
                                     .then(function(cache){
+                                        trimCache(DYNAMIC_CACHE_NAME, 3);
                                         // Response gets consumed while getting stored in the cache
                                         // It can be consumed only once. Hence, we store the clone.
                                         cache.put(event.request, res.clone());
@@ -147,7 +162,8 @@ self.addEventListener('fetch', function(event){
                             .catch(function(err){
                                 return caches.open(STATIC_CACHE_NAME)
                                         .then(function(cache){
-                                            if(event.request.url.indexOf('/help') != -1){
+                                            // Return a fallback content based on accept header
+                                            if(event.request.headers.get('accept').includes('text/html')){
                                                 return cache.match('/offline.html');
                                             }
                                         });

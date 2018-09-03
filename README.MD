@@ -221,7 +221,11 @@ We can handle this situation by creating a new version of the cache (This change
 5. **Cache, then network**  
     Fetch the resource from cache and simultaneously send request to the network. If we get response from the network, the data from cache is overridden by the network response since this is the most updated version. We could also dynamically cache the network response. If there is no response from network, the cache data is still available to be presented to the user.
 6. **Cache, then network with Offline Support**  
-    We should deploy the "Cache, then network" strategy for resources which could be updated frequently. This does not make much sense to static assets. The fetch of dynmamic and static assets need to handled conditionally in the fetch listener.
+    We should deploy the "Cache, then network" strategy for resources which could be updated frequently. This does not make much sense to static assets. The fetch of dynamic and static assets need to handled conditionally in the fetch listener.
+
+### Cache Trimming
+
+With dynamic caching implemented, the dynamic cache is bound to grow based on the visits to dynamic pages. This might bloat the cache and hence it is important to manage items by trimming the cache, as and when required.
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
