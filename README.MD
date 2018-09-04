@@ -227,6 +227,8 @@ We can handle this situation by creating a new version of the cache (This change
 
 With dynamic caching implemented, the dynamic cache is bound to grow based on the visits to dynamic pages. This might bloat the cache and hence it is important to manage items by trimming the cache, as and when required.
 
+For information on cache storage limits, refer [Offline Storage for Progressive Web Apps](https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/offline-for-pwa) and [Service Worker Cache Storage limit](https://love2dev.com/blog/what-is-the-service-worker-cache-storage-limit/)
+
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
 

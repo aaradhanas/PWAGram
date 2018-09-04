@@ -17,18 +17,6 @@ var STATIC_FILES = [
     'https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css'
 ];
 
-function trimCache(cacheName, maxItems){
-    caches.open(cacheName)
-        .then(function(cache){
-            cache.keys()
-                .then(function(keys){
-                    if( keys.length > maxItems){
-                        cache.delete(keys[0])
-                            .then(trimCache(cacheName, maxItems));
-                    }
-                })
-        })
-}
 
 /*
     Installation event is triggered by the browser if the service worker code is changed.
@@ -127,7 +115,7 @@ self.addEventListener('fetch', function(event){
                 .then(function(res){
                     return caches.open(DYNAMIC_CACHE_NAME)
                         .then(function(cache){
-                            trimCache(DYNAMIC_CACHE_NAME, 3);
+                            //trimCache(DYNAMIC_CACHE_NAME, 3);
                             // Response gets consumed while getting stored in the cache
                             // It can be consumed only once. Hence, we store the clone.
                             cache.put(event.request, res.clone());
@@ -152,7 +140,7 @@ self.addEventListener('fetch', function(event){
                             .then(function(res){
                                 return caches.open(DYNAMIC_CACHE_NAME)
                                     .then(function(cache){
-                                        trimCache(DYNAMIC_CACHE_NAME, 3);
+                                        //trimCache(DYNAMIC_CACHE_NAME, 3);
                                         // Response gets consumed while getting stored in the cache
                                         // It can be consumed only once. Hence, we store the clone.
                                         cache.put(event.request, res.clone());
@@ -218,3 +206,27 @@ self.addEventListener('fetch', function(event){
             })
     );
 }); */
+
+// Trim the cache by removing theold entries
+function trimCache(cacheName, maxItems){
+    caches.open(cacheName)
+        .then(function(cache){
+            cache.keys()
+                .then(function(keys){
+                    if( keys.length > maxItems){
+                        cache.delete(keys[0])
+                            .then(trimCache(cacheName, maxItems));
+                    }
+                })
+        })
+}
+
+// Prints the browser storage usage and quota
+function printStorageQuota(){
+    if('storage' in navigator && 'estimate' in navigator.storage){
+        navigator.storage.estimate()
+            .then(function(estimate){
+                console.log('Using '+ estimate.usage+' bytes out of '+ estimate.quota+' bytes');
+            })
+    }
+}
