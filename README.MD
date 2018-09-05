@@ -3,19 +3,19 @@ A simple Instagram clone, implementing a lot of PWA features.
 
 # What's in there?
 
-- [What is a PWA?](what-is-a-pwa)
-- [PWA Features](pwa-features)
-- [PWA Building Blocks](pwa-building-blocks)
-- [Web App Manifest](web-app-manifest)
-- [Service Workers](service-workers)
-- [Development mode](development-mode)
-- [Web App Install Banner](web-app-install-banner)
-- [Promises and Fetch API](promises-and-fetch-api)
-- [Service Workers Caching](service-workers-caching)
-- [Service Workers Advanced Caching](service-workers-advanced-caching)
-- [How to Use the App](how-to-use-the-app)
-- [Courtesy](courtesy)
-- [References](references)
+- [What is a PWA?](#what-is-a-pwa)
+- [PWA Features](#pwa-features)
+- [PWA Building Blocks](#pwa-building-blocks)
+- [Web App Manifest](#web-app-manifest)
+- [Service Workers](#service-workers)
+- [Development mode](#development-mode)
+- [Web App Install Banner](#web-app-install-banner)
+- [Promises and Fetch API](#promises-and-fetch-api)
+- [Service Workers Caching](#service-workers-caching)
+- [Service Workers Advanced Caching](#service-workers-advanced-caching)
+- [How to Use the App](#how-to-use-the-app)
+- [Courtesy](#courtesy)
+- [References](#references)
 
 # What is a PWA?
 
