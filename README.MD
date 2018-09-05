@@ -1,6 +1,22 @@
 # PWAGram
 A simple Instagram clone, implementing a lot of PWA features.
 
+# What's in there?
+
+- [What is a PWA?](what-is-a-pwa)
+- [PWA Features](pwa-features)
+- [PWA Building Blocks](pwa-building-blocks)
+- [Web App Manifest](web-app-manifest)
+- [Service Workers](service-workers)
+- [Development mode](development-mode)
+- [Web App Install Banner](web-app-install-banner)
+- [Promises and Fetch API](promises-and-fetch-api)
+- [Service Workers Caching](service-workers-caching)
+- [Service Workers Advanced Caching](service-workers-advanced-caching)
+- [How to Use the App](how-to-use-the-app)
+- [Courtesy](courtesy)
+- [References](references)
+
 # What is a PWA?
 
 PWA is the abbreviation for **Progressive Web Application**. It is a term referrring to a couple of features you can add to any web application to enhance it. You can progressively enhance your web apps to look and feel like native apps.
@@ -106,7 +122,7 @@ Are Service Workers Ready? - Check [Browser Support](https://jakearchibald.githu
 
 For detailed information on service workers, please read [Getting Started with Service Workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers)
 
-# Development mode - How to connect Chrome Developer Tools to a Real/Emulated device
+# Development mode
 
 It's easy to connect your Chrome Developer Tools with a Real or Emulated Android Device.
 
@@ -165,7 +181,7 @@ Fetch and Promises have good browser support, but are not supported by all brows
 
 **Polyfill** is a piece of code (usually JavaScript on the Web) used to provide modern functionality on older browsers that do not natively support it.
 
-# Service Workers - Caching
+# Service Workers Caching
 
 Caching is important to provide offline access of your web application. Why should we support offline access?
 
