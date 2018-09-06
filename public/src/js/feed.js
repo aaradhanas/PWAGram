@@ -23,15 +23,6 @@ function openCreatePostModal() {
     // Setting it to null since we cannot use it again
     deferredPrompt = null;
   }
-
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.getRegistrations()
-      .then(function(registrations){
-        for(var i = 0; i < registrations.length; i++){
-          registrations[i].unregister();
-        }
-      });
-  }
 }
 
 function closeCreatePostModal() {
@@ -61,13 +52,13 @@ function clearCards(){
   }
 }
 
-function createCard(){
+function createCard(post){
   var cardWrapper = document.createElement('div');
   cardWrapper.className = 'shared-moment-card mdl-card mdl-shadow--2dp';
 
   var cardTitle = document.createElement('div');
   cardTitle.className = 'mdl-card__title';
-  cardTitle.style.backgroundImage = 'url("/src/images/sf-boat.jpg")';
+  cardTitle.style.backgroundImage = 'url('+ post.image+')';
   cardTitle.style.backgroundSize = 'cover';
   cardTitle.style.height = '180px';
   cardWrapper.appendChild(cardTitle);
@@ -75,12 +66,12 @@ function createCard(){
   var cardTitleTextElement = document.createElement('h2');
   cardTitleTextElement.style.color = 'pink';
   cardTitleTextElement.className = 'mdl-card__title-text';
-  cardTitleTextElement.textContent = 'San Francisco Trip';
+  cardTitleTextElement.textContent = post.title;
   cardTitle.appendChild(cardTitleTextElement);
 
   var cardSupportingText = document.createElement('div');
   cardSupportingText.className = 'mdl-card__supporting-text';
-  cardSupportingText.textContent = 'In San Francisco';
+  cardSupportingText.textContent = post.location;
   cardSupportingText.style.textAlign = 'center';
   cardWrapper.appendChild(cardSupportingText);
 
@@ -94,20 +85,25 @@ function createCard(){
 }
 
 
+function updateUI(posts){
+  clearCards();
+  for( var i = 0 ; i < posts.length; i++){
+    createCard(posts[i]);
+  }
+}
+
 // Strategy - Cache, then network
-var url = 'https://httpbin.org/get';
+var url = 'https://pwa-gram-6c550.firebaseio.com/posts.json';
 var networkDataRecieved = false;
 
 fetch(url)
   .then(function(response){
-    console.log('[Feed js] fetch then');
     return response.json();
   })
   .then(function(data){
     networkDataRecieved = true;
     console.log('From web : ', data);
-    clearCards();
-    createCard();
+    updateUI(getPosts(data));
   });
 
 if('caches' in window){
@@ -120,8 +116,15 @@ if('caches' in window){
     .then(function(data){
       console.log('From cache : ', data);
       if(!networkDataRecieved){
-        clearCards();
-        createCard();
+       updateUI(getPosts(data));
       }
     })
+}
+
+function getPosts(data){
+  var posts = [];
+  for(key in data){
+    posts.push(data[key]);
+  }
+  return posts;
 }

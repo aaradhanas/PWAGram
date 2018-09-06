@@ -107,7 +107,7 @@ function isInArray(requestUrl){
 
 // Strategy - Cache, then network with dynamic caching and offline support
 self.addEventListener('fetch', function(event){
-    var url = 'https://httpbin.org/get';
+    var url = 'https://pwa-gram-6c550.firebaseio.com/posts';
     if(event.request.url.indexOf(url) != -1){
         event.respondWith(
             // Approach 1
