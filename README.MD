@@ -13,6 +13,7 @@ A simple Instagram clone, implementing a lot of PWA features.
 - [Promises and Fetch API](#promises-and-fetch-api)
 - [Service Workers Caching](#service-workers-caching)
 - [Service Workers Advanced Caching](#service-workers-advanced-caching)
+- [Caching dynamic data](#caching-dynamic-data)
 - [How to Use the App](#how-to-use-the-app)
 - [Courtesy](#courtesy)
 - [References](#references)
@@ -244,6 +245,20 @@ We can handle this situation by creating a new version of the cache (This change
 With dynamic caching implemented, the dynamic cache is bound to grow based on the visits to dynamic pages. This might bloat the cache and hence it is important to manage items by trimming the cache, as and when required.
 
 For information on cache storage limits, refer [Offline Storage for Progressive Web Apps](https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/offline-for-pwa) and [Service Worker Cache Storage limit](https://love2dev.com/blog/what-is-the-service-worker-cache-storage-limit/)
+
+# Caching dynamic data
+
+### Dynamic caching vs Caching dynamic content
+
+**Dynamic caching** is nothing but storing the responses received from the network in the cache, so that they can be used in the future. The cache used here is the Application Cache which is accessed via the Cache API.
+
+**Caching dynamic content** is the process of caching structured/unstructured data like JSON/XML, etc. These data are bound to change over time (frequently) and hence referred to as dynamic. They are stored in the Indexed DB (key-value database).
+
+Why not use Cache API instead of Indexed DB? For data in JSON format, Indexed DB seems to be a better way to store. Using the cache API, we can store only the entire HTTP response. In Indexed DB, we could store formatted/transformed response or a part of the response. We have full power over what we want to store.
+
+The **Approach is comparable** (Fetch Data and Store for Retrieval in the Future). The **Data Nature** and **Format** is different.
+
+
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
