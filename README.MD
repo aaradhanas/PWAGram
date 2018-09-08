@@ -248,17 +248,24 @@ For information on cache storage limits, refer [Offline Storage for Progressive 
 
 # Caching dynamic data
 
-### Dynamic caching vs Caching dynamic content
-
 **Dynamic caching** is nothing but storing the responses received from the network in the cache, so that they can be used in the future. The cache used here is the Application Cache which is accessed via the Cache API.
 
 **Caching dynamic content** is the process of caching structured/unstructured data like JSON/XML, etc. These data are bound to change over time (frequently) and hence referred to as dynamic. They are stored in the Indexed DB (key-value database).
 
 Why not use Cache API instead of Indexed DB? For data in JSON format, Indexed DB seems to be a better way to store. Using the cache API, we can store only the entire HTTP response. In Indexed DB, we could store formatted/transformed response or a part of the response. We have full power over what we want to store.
 
+
 The **Approach is comparable** (Fetch Data and Store for Retrieval in the Future). The **Data Nature** and **Format** is different.
 
+## IndexedDB
 
+- A transactional key-value database running in the browser  
+    Transactional means if one action within a transaction fails, none of the actions of that transaction are applied. This is important to ensure database integrity.
+- Significant amount of unstructured data, including files/blobs can be stored.
+- Can be accessed asynchronously, both from service worker and normal JavaScript.
+- There is one database per application and multiple object stores in the database.
+
+For information on browser support, refer [Browser support for IndexedDB](https://caniuse.com/#search=indexeddb)
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
