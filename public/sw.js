@@ -1,3 +1,5 @@
+importScripts('/src/js/idb.js');
+
 var STATIC_CACHE_NAME = 'static-v8';
 var DYNAMIC_CACHE_NAME = 'dynamic-v1';
 var STATIC_FILES = [
@@ -6,6 +8,7 @@ var STATIC_FILES = [
     '/offline.html',
     '/src/js/app.js',
     '/src/js/feed.js',
+    '/src/js/idb.js',
     '/src/js/material.min.js',
     '/src/js/polyfills/promise.js',
     '/src/js/polyfills/fetch.js',
@@ -17,6 +20,11 @@ var STATIC_FILES = [
     'https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css'
 ];
 
+var dbPromise = idb.open('posts-db', 1, function(db){
+    if(!db.objectStoreNames.contains('posts-store')){
+        db.createObjectStore('posts-store', {keyPath: 'id'});
+    }
+});
 
 /*
     Installation event is triggered by the browser if the service worker code is changed.
@@ -113,14 +121,20 @@ self.addEventListener('fetch', function(event){
             // Approach 1
             fetch(event.request)
                 .then(function(res){
-                    return caches.open(DYNAMIC_CACHE_NAME)
-                        .then(function(cache){
-                            //trimCache(DYNAMIC_CACHE_NAME, 3);
-                            // Response gets consumed while getting stored in the cache
-                            // It can be consumed only once. Hence, we store the clone.
-                            cache.put(event.request, res.clone());
-                            return res;
+                    var clonedRes = res.clone();
+                    clonedRes.json()
+                        .then(function(data){
+                            for(var key in data){
+                                dbPromise
+                                    .then(function(db){
+                                        var txn = db.transaction('posts-store', 'readwrite');
+                                        var store = txn.objectStore('posts-store');
+                                        store.put(data[key]);
+                                        return txn.complete;
+                                    })
+                            }
                         })
+                    return res;
                 })
         );
     } else if(isInArray(event.request.url)){

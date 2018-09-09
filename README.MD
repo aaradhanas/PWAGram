@@ -68,6 +68,8 @@ Before getting on to what service workers are, lets see the behaviour of normal 
     - HTML code
     - Another server (like web push notifications)
 
+A service worker is a type of **web worker**. It's essentially a JavaScript file that runs separately from the main browser thread, intercepting network requests, caching or retrieving resources from the cache, and delivering push messages.
+
 ### What are the events the service worker can listen to?
 
 1. **Fetch** - Browser or page-related JS initiates a Fetch (HTTP Request)
