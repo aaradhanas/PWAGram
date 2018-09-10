@@ -106,7 +106,17 @@ fetch(url)
     updateUI(getPosts(data));
   });
 
-if('caches' in window){
+if('indexedDB' in window){
+  readAllData('posts-store')
+    .then(function(data){
+      if(!networkDataRecieved){
+        console.log('From cache : ', data);
+        updateUI(data);
+      }
+    });
+}
+
+/* if('caches' in window){
   caches.match(url)
     .then(function(response){
       if(response){
@@ -119,7 +129,7 @@ if('caches' in window){
        updateUI(getPosts(data));
       }
     })
-}
+} */
 
 function getPosts(data){
   var posts = [];

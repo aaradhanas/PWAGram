@@ -1,7 +1,9 @@
 importScripts('/src/js/idb.js');
+importScripts('/src/js/idb-utility.js');
 
-var STATIC_CACHE_NAME = 'static-v8';
+var STATIC_CACHE_NAME = 'static-v13';
 var DYNAMIC_CACHE_NAME = 'dynamic-v1';
+
 var STATIC_FILES = [
     '/',
     '/index.html',
@@ -9,6 +11,7 @@ var STATIC_FILES = [
     '/src/js/app.js',
     '/src/js/feed.js',
     '/src/js/idb.js',
+    '/src/js/idb-utility.js',
     '/src/js/material.min.js',
     '/src/js/polyfills/promise.js',
     '/src/js/polyfills/fetch.js',
@@ -19,12 +22,6 @@ var STATIC_FILES = [
     'https://fonts.googleapis.com/icon?family=Material+Icons',
     'https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css'
 ];
-
-var dbPromise = idb.open('posts-db', 1, function(db){
-    if(!db.objectStoreNames.contains('posts-store')){
-        db.createObjectStore('posts-store', {keyPath: 'id'});
-    }
-});
 
 /*
     Installation event is triggered by the browser if the service worker code is changed.
@@ -125,13 +122,7 @@ self.addEventListener('fetch', function(event){
                     clonedRes.json()
                         .then(function(data){
                             for(var key in data){
-                                dbPromise
-                                    .then(function(db){
-                                        var txn = db.transaction('posts-store', 'readwrite');
-                                        var store = txn.objectStore('posts-store');
-                                        store.put(data[key]);
-                                        return txn.complete;
-                                    })
+                                writeData('posts-store', data[key]);
                             }
                         })
                     return res;
