@@ -266,8 +266,19 @@ The **Approach is comparable** (Fetch Data and Store for Retrieval in the Future
 - Significant amount of unstructured data, including files/blobs can be stored.
 - Can be accessed asynchronously, both from service worker and normal JavaScript.
 - There is one database per application and multiple object stores in the database.
+- IndexedDB follows a same-origin policy. So while you can access stored data within a domain, you cannot access data across different domains.
 
-For information on browser support, refer [Browser support for IndexedDB](https://caniuse.com/#search=indexeddb)
+For information on browser support, refer [Browser support for IndexedDB](https://caniuse.com/#search=indexeddb).
+
+Available IndexedDB wrappers
+- https://github.com/jakearchibald/idb
+- http://dexie.org/
+
+# Responsive Design in a PWA
+
+ - Use **CSS Media Queries** to adjust layout and design
+ - Mobile First
+ - Make your images responsive
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
