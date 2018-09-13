@@ -60,7 +60,6 @@ function createCard(post){
   cardTitle.className = 'mdl-card__title';
   cardTitle.style.backgroundImage = 'url('+ post.image+')';
   cardTitle.style.backgroundSize = 'cover';
-  cardTitle.style.height = '180px';
   cardWrapper.appendChild(cardTitle);
 
   var cardTitleTextElement = document.createElement('h2');
