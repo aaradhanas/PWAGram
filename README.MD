@@ -278,7 +278,9 @@ Available IndexedDB wrappers
 
  - Use **CSS Media Queries** to adjust layout and design
  - Mobile First
- - Make your images responsive
+ - [Make your images responsive](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
+
+To know about retina display, have a look at [Retina Web Graphics](https://www.danrodney.com/blog/retina-web-graphics-explained-1x-versus-2x-low-res-versus-hi-res/)
 
 # How to Use the App
 You need [Node.js](https://nodejs.org) installed on your machine. Simply download the installer from [nodejs.org](https://nodejs.org) and go through the installation steps.
