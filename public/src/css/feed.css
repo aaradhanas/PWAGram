@@ -8,7 +8,12 @@
   top: 56px;
   background: white;
   text-align: center;
-  display: none;
+  transform: translateY(100vh);
+  transition: transform 0.3s;
+}
+
+.post-visible{
+  transform: translateY(0) !important;
 }
 
 .main-image {

@@ -4,7 +4,8 @@ var closeCreatePostModalButton = document.querySelector('#close-create-post-moda
 var sharedMomentsArea = document.querySelector('#shared-moments');
 
 function openCreatePostModal() {
-  createPostArea.style.display = 'block';
+  //createPostArea.style.display = 'block';
+  createPostArea.classList.add('post-visible');
 
   if(deferredPrompt){
     deferredPrompt.prompt();
@@ -26,7 +27,8 @@ function openCreatePostModal() {
 }
 
 function closeCreatePostModal() {
-  createPostArea.style.display = 'none';
+  //createPostArea.style.display = 'none';
+  createPostArea.classList.remove('post-visible');
 }
 
 shareImageButton.addEventListener('click', openCreatePostModal);
